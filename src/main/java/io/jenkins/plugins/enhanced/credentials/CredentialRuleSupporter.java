@@ -20,13 +20,13 @@ public class CredentialRuleSupporter {
 
     public Boolean checkProjectHasAccessForCredential(Credentials credentials, FreeStyleProject project) {
         String credentialId = callGetId(credentials);
-        String itemName = project.getName();
+        String itemName = project.getFullName();
         return checkItemHasAccessForCredential(credentialId, itemName);
     }
 
     public Boolean checkJobHasAccessForCredential(Credentials credentials, Job job) {
         String credentialId = callGetId(credentials);
-        String itemName = job.getName();
+        String itemName = job.getFullName();
         return checkItemHasAccessForCredential(credentialId, itemName);
     }
 
