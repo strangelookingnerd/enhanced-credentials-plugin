@@ -6,11 +6,11 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.40</version>
+        <version>4.71</version>
         <relativePath/>
     </parent>
     <groupId>io.jenkins.plugins</groupId>
-    <artifactId>role-based-credentials</artifactId>
+    <artifactId>enhanced-credentials</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Enhanced Credentials</name>
@@ -36,11 +36,11 @@
         <tag>HEAD</tag>
     </scm>
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <java.level>8</java.level>
-        <java.version>1.8</java.version>
-        <jenkins.version>2.346.1</jenkins.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <java.level>11</java.level>
+        <java.version>11</java.version>
+        <jenkins.version>2.387.3</jenkins.version>
     </properties>
     <repositories>
         <repository>
@@ -58,8 +58,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.346.x</artifactId>
-                <version>1478.v81d3dc4f9a_43</version>
+                <artifactId>bom-2.387.x</artifactId>
+                <version>2102.v854b_fec19c92</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -69,7 +69,6 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>credentials</artifactId>
-            <version>1139.veb_9579fca_33b_</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -78,12 +77,12 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-job</artifactId>
-            <version>1203.v7b_7023424efe</version>
+            <version>1289.vd1c337fd5354</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>1.18.26</version>
         </dependency>
         <dependency>
             <groupId>io.jenkins</groupId>
@@ -146,6 +145,9 @@
                 <groupId>org.jenkins-ci.tools</groupId>
                 <artifactId>maven-hpi-plugin</artifactId>
                 <version>3.5</version>
+                <configuration>
+                    <minimumJavaVersion>11</minimumJavaVersion>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
