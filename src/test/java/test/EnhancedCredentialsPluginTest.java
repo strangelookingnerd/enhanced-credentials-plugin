@@ -3,7 +3,7 @@ package test;
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import hudson.model.FreeStyleProject;
 import hudson.model.Label;
-import io.jenkins.plugins.enhanced.credentials.CredentialRole;
+import io.jenkins.plugins.enhanced.credentials.CredentialRule;
 import io.jenkins.plugins.enhanced.credentials.CredentialUsage;
 import io.jenkins.plugins.enhanced.credentials.CredentialUsages;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
@@ -125,7 +125,7 @@ public class EnhancedCredentialsPluginTest extends BaseTest{
 
     @Test
     public void testMatchingWithRulesWithFreeStyleWithRestrict() throws Exception {
-        this.configure(this.jenkinsRule, true, Arrays.asList(new CredentialRole("testMatchingWithRulesWithFreeStyle","credential1.*","testMatchingWithRulesWithFreeStyleWithRestrict.*")));
+        this.configure(this.jenkinsRule, true, Arrays.asList(new CredentialRule("testMatchingWithRulesWithFreeStyle","credential1.*","testMatchingWithRulesWithFreeStyleWithRestrict.*")));
         FreeStyleProject freeStyleProject = this.createFreeStyle("testMatchingWithRulesWithFreeStyleWithRestrict1", credential1);
         shouldSuccess(freeStyleProject);
         freeStyleProject = this.createFreeStyle("FAILtestMatchingWithRulesWithFreeStyleWithRestrict2", credential1);
@@ -140,7 +140,7 @@ public class EnhancedCredentialsPluginTest extends BaseTest{
 
     @Test
     public void testMatchingWithRulesWithPipelineWithRestrict() throws Exception {
-        this.configure(this.jenkinsRule, true, Arrays.asList(new CredentialRole("testMatchingWithRulesWithPipelineWithRestrict","credential1.*","testMatchingWithRulesWithPipelineWithRestrict.*")));
+        this.configure(this.jenkinsRule, true, Arrays.asList(new CredentialRule("testMatchingWithRulesWithPipelineWithRestrict","credential1.*","testMatchingWithRulesWithPipelineWithRestrict.*")));
         WorkflowJob workflowJob = this.createPipeline("testMatchingWithRulesWithPipelineWithRestrict1", credential1,true);
         shouldSuccess(workflowJob);
         workflowJob = this.createPipeline("FAILtestMatchingWithRulesWithPipelineWithRestrict2", credential1, true);
@@ -155,7 +155,7 @@ public class EnhancedCredentialsPluginTest extends BaseTest{
 
     @Test
     public void testMatchingWithRulesWithFreeStyleWithNoRestrict() throws Exception {
-        this.configure(this.jenkinsRule, false, Arrays.asList(new CredentialRole("testMatchingWithRulesWithFreeStyle","credential1.*","testMatchingWithRulesWithFreeStyleWithNoRestrict.*")));
+        this.configure(this.jenkinsRule, false, Arrays.asList(new CredentialRule("testMatchingWithRulesWithFreeStyle","credential1.*","testMatchingWithRulesWithFreeStyleWithNoRestrict.*")));
         FreeStyleProject freeStyleProject = this.createFreeStyle("testMatchingWithRulesWithFreeStyleWithNoRestrict1", credential1);
         shouldSuccess(freeStyleProject);
         freeStyleProject = this.createFreeStyle("FAILtestMatchingWithRulesWithFreeStyleWithNoRestrict2", credential1);
@@ -170,7 +170,7 @@ public class EnhancedCredentialsPluginTest extends BaseTest{
 
     @Test
     public void testMatchingWithRulesWithPipelineWithNoRestrict() throws Exception {
-        this.configure(this.jenkinsRule, false, Arrays.asList(new CredentialRole("testMatchingWithRulesWithPipelineWithNoRestrict","credential1.*","testMatchingWithRulesWithPipelineWithNoRestrict.*")));
+        this.configure(this.jenkinsRule, false, Arrays.asList(new CredentialRule("testMatchingWithRulesWithPipelineWithNoRestrict","credential1.*","testMatchingWithRulesWithPipelineWithNoRestrict.*")));
         WorkflowJob workflowJob = this.createPipeline("testMatchingWithRulesWithPipelineWithNoRestrict1", credential1,true);
         shouldSuccess(workflowJob);
         workflowJob = this.createPipeline("FAILtestMatchingWithRulesWithPipelineWithNoRestrict2", credential1, true);

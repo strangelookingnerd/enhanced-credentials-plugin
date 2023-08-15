@@ -10,8 +10,8 @@ import hudson.model.Label;
 import hudson.model.Result;
 import hudson.tasks.BatchFile;
 import hudson.tasks.Shell;
-import io.jenkins.plugins.enhanced.credentials.CredentialRole;
-import io.jenkins.plugins.enhanced.credentials.CredentialRoles;
+import io.jenkins.plugins.enhanced.credentials.CredentialRule;
+import io.jenkins.plugins.enhanced.credentials.CredentialRules;
 import io.jenkins.plugins.enhanced.credentials.CredentialUsages;
 import org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper;
 import org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordBinding;
@@ -75,10 +75,10 @@ public abstract class BaseTest {
         return workflowJob;
     }
 
-    protected void configure(JenkinsRule jenkinsRule, Boolean restrictNotMatching, List<CredentialRole> credentialRoleList) {
-        CredentialRoles.CredentialRolesDescriptorImpl descriptor = (CredentialRoles.CredentialRolesDescriptorImpl) jenkinsRule.jenkins.getDescriptor(CredentialRoles.class);
+    protected void configure(JenkinsRule jenkinsRule, Boolean restrictNotMatching, List<CredentialRule> credentialRuleList) {
+        CredentialRules.CredentialRulesDescriptorImpl descriptor = (CredentialRules.CredentialRulesDescriptorImpl) jenkinsRule.jenkins.getDescriptor(CredentialRules.class);
         descriptor.restrictNotMatching = restrictNotMatching;
-        descriptor.credentialRoleList = credentialRoleList;
+        descriptor.credentialRuleList = credentialRuleList;
         descriptor.save();
     }
 

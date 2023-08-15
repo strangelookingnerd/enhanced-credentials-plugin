@@ -13,9 +13,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class CredentialRoleSupporter {
+public class CredentialRuleSupporter {
 
-    private static final Logger LOGGER = Logger.getLogger(CredentialRoleSupporter.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CredentialRuleSupporter.class.getName());
 
     public Boolean checkProjectHasAccessForCredential(Credentials credentials, FreeStyleProject project) {
         String credentialId = callGetId(credentials);
@@ -30,14 +30,14 @@ public class CredentialRoleSupporter {
     }
 
     private Boolean checkItemHasAccessForCredential(String credentialId, String itemName) {
-        CredentialRoles credentialRoles = CredentialRoleConfiguration.loadItemCredentialRoles();
+        CredentialRules credentialRules = CredentialRuleConfiguration.loadCredentialRules();
         LOGGER.fine(String.format("Checking Access for Credential:%s and Item:%s", credentialId, itemName));
 
-        // Check if there are any roles are defined
-        if (credentialRoles.getItemCredentialRoleList().size() == 0) {
+        // Check if there are any rules are defined
+        if (credentialRules.getCredentialRuleList().size() == 0) {
             LOGGER.fine("No Credentials Rules are found");
             // If there are no rules, then check the default restriction config
-            if (credentialRoles.getRestrictNotMatching()) {
+            if (credentialRules.getRestrictNotMatching()) {
                 // Means that credential usage must be blocked
                 LOGGER.info(String.format("Blocking Credential:%s Access for Item:%s", credentialId, itemName));
                 return false;
@@ -50,9 +50,9 @@ public class CredentialRoleSupporter {
             // If there are rules defined, loop in them and find if there are any matches
             Boolean isCredentialMatched = false;
             Boolean isItemAllowed = false;
-            for (CredentialRole credentialRole : credentialRoles.getItemCredentialRoleList()) {
-                String credentialPattern = credentialRole.getCredentialPattern();
-                String itemPattern = credentialRole.getItemPattern();
+            for (CredentialRule credentialRule : credentialRules.getCredentialRuleList()) {
+                String credentialPattern = credentialRule.getCredentialPattern();
+                String itemPattern = credentialRule.getItemPattern();
                 LOGGER.fine(String.format("Checking access for credentialPattern:%s and itemPattern:%s", credentialPattern,itemPattern));
                 // Check if the credential Name matches with the pattern
                 if (credentialId.matches(credentialPattern)) {
@@ -69,7 +69,7 @@ public class CredentialRoleSupporter {
             // and
             // If the credential is not matched.
             // return true for blocking
-            if (credentialRoles.getRestrictNotMatching() && !isCredentialMatched) {
+            if (credentialRules.getRestrictNotMatching() && !isCredentialMatched) {
                 LOGGER.info(String.format("Blocking Credential:%s Access for Item:%s", credentialId, itemName));
                 return false;
             }
@@ -77,7 +77,7 @@ public class CredentialRoleSupporter {
             // and
             // If the credential is matched.
             // return isItemAllowed for blocking
-            if (credentialRoles.getRestrictNotMatching() && isCredentialMatched) {
+            if (credentialRules.getRestrictNotMatching() && isCredentialMatched) {
                 if( isItemAllowed)
                     LOGGER.info(String.format("Allowing Credential:%s Access for Item:%s", credentialId, itemName));
                 else
@@ -88,7 +88,7 @@ public class CredentialRoleSupporter {
             // and
             // If the credential is matched.
             // return isItemAllowed for blocking
-            if (!credentialRoles.getRestrictNotMatching() && isCredentialMatched) {
+            if (!credentialRules.getRestrictNotMatching() && isCredentialMatched) {
                 if( isItemAllowed)
                     LOGGER.info(String.format("Allowing Credential:%s Access for Item:%s", credentialId, itemName));
                 else
@@ -99,7 +99,7 @@ public class CredentialRoleSupporter {
             // and
             // If the credential is not matched.
             // return true for allowing
-            if (!credentialRoles.getRestrictNotMatching() && !isCredentialMatched) {
+            if (!credentialRules.getRestrictNotMatching() && !isCredentialMatched) {
                 LOGGER.info(String.format("Allowing Credential:%s Access for Item:%s", credentialId, itemName));
                 return true;
             }

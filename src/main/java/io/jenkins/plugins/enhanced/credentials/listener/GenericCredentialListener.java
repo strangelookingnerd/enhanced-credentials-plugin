@@ -4,7 +4,7 @@ import com.cloudbees.plugins.credentials.Credentials;
 import com.cloudbees.plugins.credentials.CredentialsUseListener;
 import hudson.Extension;
 import hudson.model.*;
-import io.jenkins.plugins.enhanced.credentials.CredentialRoleSupporter;
+import io.jenkins.plugins.enhanced.credentials.CredentialRuleSupporter;
 import io.jenkins.plugins.enhanced.credentials.CredentialUsages;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
@@ -24,13 +24,13 @@ public class GenericCredentialListener {
     @Extension
     public static class GenericCredentialsUseListener implements CredentialsUseListener {
 
-        private CredentialRoleSupporter credentialRoleSupporter = new CredentialRoleSupporter();
+        private CredentialRuleSupporter credentialRuleSupporter = new CredentialRuleSupporter();
 
         private void error(Credentials c, String buildUrl) {
             // Get task listener for the build and print log into the build
             TaskListener taskListener = GenericRunListener.getTaskListener(buildUrl);
             LOGGER.fine(String.format("Found Task Listener:%s for Build Url:%s", taskListener.toString(), buildUrl));
-            taskListener.error(String.format("Access to credential is blocked. Failing the build..", credentialRoleSupporter.callGetId(c)));
+            taskListener.error(String.format("Access to credential is blocked. Failing the build..", credentialRuleSupporter.callGetId(c)));
         }
 
         @Override
@@ -41,18 +41,18 @@ public class GenericCredentialListener {
             if (run instanceof FreeStyleBuild) {
                 FreeStyleBuild freeStyleBuild = (FreeStyleBuild) run;
                 // Check if parent job has access to the credential
-                if (!credentialRoleSupporter.checkProjectHasAccessForCredential(c, freeStyleBuild.getProject())) {
-                    LOGGER.fine(String.format("Credential:%s doesn't have access for Project:%s - Stopping build..", CredentialRoleSupporter.callGetId(c),freeStyleBuild.getProject().getUrl()));
+                if (!credentialRuleSupporter.checkProjectHasAccessForCredential(c, freeStyleBuild.getProject())) {
+                    LOGGER.fine(String.format("Credential:%s doesn't have access for Project:%s - Stopping build..", CredentialRuleSupporter.callGetId(c),freeStyleBuild.getProject().getUrl()));
                     error(c, freeStyleBuild.getUrl());
                     freeStyleBuildsToStop.add(freeStyleBuild);
                 }
             }
             else if (run instanceof WorkflowRun) {
                 WorkflowRun workflowRun = (WorkflowRun) run;
-                if (!credentialRoleSupporter.checkJobHasAccessForCredential(c, workflowRun.getParent())) {
-                    LOGGER.fine(String.format("Credential:%s doesn't have access for Project:%s - Stopping build..", CredentialRoleSupporter.callGetId(c),workflowRun.getParent().getUrl()));
+                if (!credentialRuleSupporter.checkJobHasAccessForCredential(c, workflowRun.getParent())) {
+                    LOGGER.fine(String.format("Credential:%s doesn't have access for Project:%s - Stopping build..", CredentialRuleSupporter.callGetId(c),workflowRun.getParent().getUrl()));
                     error(c, workflowRun.getUrl());
-                    credentialRoleSupporter.tryStoppingWorkflowRun(workflowRun);
+                    credentialRuleSupporter.tryStoppingWorkflowRun(workflowRun);
                 }
 
             } else {

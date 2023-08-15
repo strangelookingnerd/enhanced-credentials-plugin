@@ -3,7 +3,7 @@ package io.jenkins.plugins.enhanced.credentials.listener;
 import hudson.Extension;
 import hudson.model.*;
 import hudson.tasks.BuildStep;
-import io.jenkins.plugins.enhanced.credentials.CredentialRoleSupporter;
+import io.jenkins.plugins.enhanced.credentials.CredentialRuleSupporter;
 import lombok.SneakyThrows;
 
 import java.util.logging.Logger;
@@ -15,7 +15,7 @@ public class GenericStepListener {
     @Extension
     public static class GenericBuildStepListener extends BuildStepListener{
 
-        CredentialRoleSupporter credentialRoleSupporter = new CredentialRoleSupporter();
+        CredentialRuleSupporter credentialRuleSupporter = new CredentialRuleSupporter();
 
         @SneakyThrows
         @Override
@@ -25,7 +25,7 @@ public class GenericStepListener {
                 LOGGER.fine(String.format("Found instance of FreeStyleBuild for %s", freeStyleBuild.getUrl()));
                 if(GenericCredentialListener.freeStyleBuildsToStop.contains(freeStyleBuild)){
                     LOGGER.fine(String.format("Stopping Step for FreeStyleBuild:%s", freeStyleBuild.getUrl()));
-                    credentialRoleSupporter.tryStoppingFreeStyleBuild(freeStyleBuild);
+                    credentialRuleSupporter.tryStoppingFreeStyleBuild(freeStyleBuild);
                 }
             }
         }

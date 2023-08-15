@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> {
 
-    private static final Logger LOGGER = Logger.getLogger(CredentialRoleSupporter.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CredentialRuleSupporter.class.getName());
 
     private HashMap<String, CredentialUsage> credentialUsageMap;
 
@@ -60,7 +60,7 @@ public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> 
     }
 
     public static synchronized void incrementCredentialUsage(Credentials credentials, Object callerObject) {
-        String credentialId = CredentialRoleSupporter.callGetId(credentials);
+        String credentialId = CredentialRuleSupporter.callGetId(credentials);
         LOGGER.fine(String.format("Incrementing usage count for Credential:%s", credentialId));
         CredentialUsages credentialUsages = loadCredentialUsageReport();
         CredentialUsage credentialUsage = credentialUsages.credentialUsageMap.getOrDefault(credentialId, new CredentialUsage(credentialId));

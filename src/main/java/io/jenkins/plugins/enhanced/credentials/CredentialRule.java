@@ -13,14 +13,14 @@ import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
-public class CredentialRole extends AbstractDescribableImpl<CredentialRole> {
+public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
 
     private String name;
     private String credentialPattern;
     private String itemPattern;
 
     @DataBoundConstructor
-    public CredentialRole(String name, String credentialPattern, String itemPattern) {
+    public CredentialRule(String name, String credentialPattern, String itemPattern) {
         this.name = name;
         this.credentialPattern = credentialPattern;
         this.itemPattern = itemPattern;
@@ -54,17 +54,17 @@ public class CredentialRole extends AbstractDescribableImpl<CredentialRole> {
     }
 
     @Override
-    public Descriptor<CredentialRole> getDescriptor() {
+    public Descriptor<CredentialRule> getDescriptor() {
         return super.getDescriptor();
     }
 
     @Extension
-    public static final class ItemCredentialRoleDescriptor extends Descriptor<CredentialRole> {
+    public static final class CredentialRuleDescriptor extends Descriptor<CredentialRule> {
 
         @NonNull
         @Override
         public String getDisplayName() {
-            return "Credential Role Definition";
+            return "Credential Rule Definition";
         }
 
         public FormValidation doCheckName(@QueryParameter String value){
