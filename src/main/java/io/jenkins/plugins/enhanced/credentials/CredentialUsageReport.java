@@ -63,7 +63,8 @@ public class CredentialUsageReport extends ManagementLink {
         return url;
     }
 
-    public void doUsageDetails(StaplerRequest staplerRequest, StaplerResponse staplerResponse) throws ServletException, IOException {
+    public void doUsageDetails(StaplerRequest staplerRequest, StaplerResponse staplerResponse) throws Exception {
+        CredentialRuleSupporter.checkAdminPermission();
         String credentialId = staplerRequest.getParameter("credentialId");
         staplerRequest.setAttribute("selectedCredentialId", credentialId);
         staplerRequest.setAttribute("selectedCredentialUsage", this.getCredentialUsage(credentialId));
@@ -71,7 +72,8 @@ public class CredentialUsageReport extends ManagementLink {
     }
 
     @RequirePOST
-    public void doClearData(StaplerRequest staplerRequest, StaplerResponse staplerResponse) throws ServletException, IOException {
+    public void doClearData(StaplerRequest staplerRequest, StaplerResponse staplerResponse) throws Exception {
+        CredentialRuleSupporter.checkAdminPermission();
         CredentialUsages.clearUsageData();
         staplerResponse.forwardToPreviousPage(staplerRequest);
     }

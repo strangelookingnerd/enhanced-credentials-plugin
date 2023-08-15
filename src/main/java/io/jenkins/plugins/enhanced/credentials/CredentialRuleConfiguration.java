@@ -9,6 +9,7 @@ import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -69,7 +70,9 @@ public class CredentialRuleConfiguration extends ManagementLink {
         return getCredentialRulesDescriptor().getCredentialRules();
     }
 
-    public void doUpdate(StaplerRequest req, StaplerResponse rsp) throws ServletException, IOException, Descriptor.FormException {
+    @RequirePOST
+    public void doUpdate(StaplerRequest req, StaplerResponse rsp) throws Exception {
+        CredentialRuleSupporter.checkAdminPermission();
         JSONObject submittedForm = req.getSubmittedForm();
         this.saveCredentialRules(req,submittedForm);
         FormApply.success(req.getContextPath() + "/" + this.getUrlName()).generateResponse(req, rsp, null);

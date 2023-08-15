@@ -12,6 +12,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
 
@@ -67,6 +68,7 @@ public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
             return "Credential Rule Definition";
         }
 
+        @RequirePOST
         public FormValidation doCheckName(@QueryParameter String value){
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
             if(Util.fixEmptyAndTrim(value) == null){
@@ -75,6 +77,7 @@ public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
             return FormValidation.ok();
         }
 
+        @RequirePOST
         public FormValidation doCheckCredentialPattern(@QueryParameter String value){
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
             if(Util.fixEmptyAndTrim(value) == null){
@@ -83,6 +86,7 @@ public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
             return FormValidation.ok();
         }
 
+        @RequirePOST
         public FormValidation doCheckItemPattern(@QueryParameter String value){
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
             if(Util.fixEmptyAndTrim(value) == null){

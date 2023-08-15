@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import hudson.AbortException;
 import hudson.model.*;
 import io.jenkins.plugins.enhanced.credentials.listener.GenericRunListener;
+import jenkins.model.Jenkins;
 import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.jenkinsci.plugins.workflow.steps.StepExecution;
@@ -150,6 +151,14 @@ public class CredentialRuleSupporter {
             // If it can't get the ID, there is nothing can be done.
             throw new RuntimeException("Runtime Exception");
         }
+    }
+
+    public static void checkAdminPermission() throws Exception {
+        Jenkins jenkins = Jenkins.getInstanceOrNull();
+        if(jenkins == null){
+            throw new Exception("Couldn't get Jenkins Instance");
+        }
+        jenkins.checkPermission(Jenkins.ADMINISTER);
     }
 
 }
