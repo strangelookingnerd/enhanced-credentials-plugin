@@ -17,6 +17,8 @@ import org.kohsuke.stapler.interceptor.RequirePOST;
 public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
 
     private String name;
+
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]")
     private String credentialPattern;
     private String itemPattern;
 

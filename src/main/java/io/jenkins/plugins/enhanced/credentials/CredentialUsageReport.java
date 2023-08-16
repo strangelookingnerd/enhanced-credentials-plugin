@@ -63,6 +63,7 @@ public class CredentialUsageReport extends ManagementLink {
         return url;
     }
 
+    @SuppressWarnings("lgtm[jenkins/csrf]")
     public void doUsageDetails(StaplerRequest staplerRequest, StaplerResponse staplerResponse) throws Exception {
         CredentialRuleSupporter.checkAdminPermission();
         String credentialId = staplerRequest.getParameter("credentialId");
