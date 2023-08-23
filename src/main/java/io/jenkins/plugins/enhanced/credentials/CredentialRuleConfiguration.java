@@ -31,7 +31,7 @@ public class CredentialRuleConfiguration extends ManagementLink {
 
     @Override
     public String getIconFileName() {
-        return "secure.png";
+        return "symbol-lock-closed";
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CredentialRuleConfiguration extends ManagementLink {
     }
 
     private static CredentialRules.CredentialRulesDescriptorImpl getCredentialRulesDescriptor(){
-        Descriptor descriptor = Jenkins.getActiveInstance().getDescriptorOrDie(CredentialRules.class);
+        Descriptor descriptor = Jenkins.get().getDescriptorOrDie(CredentialRules.class);
         return (CredentialRules.CredentialRulesDescriptorImpl) descriptor;
     }
 

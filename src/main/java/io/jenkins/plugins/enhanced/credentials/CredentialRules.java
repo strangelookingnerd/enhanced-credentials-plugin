@@ -54,7 +54,7 @@ public class CredentialRules extends AbstractDescribableImpl<CredentialRules> {
     }
 
     public List<Descriptor<CredentialRule>> getCredentialRuleListDescriptors() {
-        return Jenkins.getActiveInstance().getDescriptorList(CredentialRule.class);
+        return Jenkins.get().getDescriptorList(CredentialRule.class);
     }
 
     @Extension

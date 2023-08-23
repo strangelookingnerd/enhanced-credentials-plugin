@@ -34,7 +34,7 @@ public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> 
     }
 
     private static CredentialUsages.CredentialUsageDescriptor getCredentialUsageReport() {
-        Descriptor descriptor = Jenkins.getActiveInstance().getDescriptorOrDie(CredentialUsages.class);
+        Descriptor descriptor = Jenkins.get().getDescriptorOrDie(CredentialUsages.class);
         return (CredentialUsages.CredentialUsageDescriptor) descriptor;
     }
 
