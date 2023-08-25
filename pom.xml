@@ -9,7 +9,7 @@
     </parent>
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>enhanced-credentials</artifactId>
-    <version>1.0</version>
+    <version>${revision}${changelist}</version>
     <packaging>hpi</packaging>
     <name>Enhanced Credentials</name>
     <description>Enhance Credentials with Credential Access Filtering and Usage Reporting</description>
@@ -28,12 +28,15 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com:jenkinsci/enhanced-credentials-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/enhanced-credentials-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/enhanced-credentials-plugin</url>
-        <tag>enhanced-credentials-1.0</tag>
+        <connection>scm:git:git@github.com:${gitHubRepo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
+        <url>https://github.com/${gitHubRepo}</url>
+        <tag>${scmTag}</tag>
     </scm>
     <properties>
+        <revision>1.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <gitHubRepo>jenkinsci/enhanced-credentials-plugin</gitHubRepo>
         <jenkins.version>2.387.3</jenkins.version>
     </properties>
     <repositories>
