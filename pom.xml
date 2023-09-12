@@ -37,7 +37,7 @@
         <revision>1.1</revision>
         <changelist>-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/enhanced-credentials-plugin</gitHubRepo>
-        <jenkins.version>2.387.3</jenkins.version>
+        <jenkins.version>2.387.1</jenkins.version>
     </properties>
     <repositories>
         <repository>
