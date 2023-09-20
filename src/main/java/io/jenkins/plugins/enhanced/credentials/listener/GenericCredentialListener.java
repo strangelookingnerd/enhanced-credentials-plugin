@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Credential Listener for finding credential usage.
+ * Credential Listener for restriction credentials usage
  */
 public class GenericCredentialListener {
 
@@ -35,8 +35,6 @@ public class GenericCredentialListener {
 
         @Override
         public void onUse(Credentials c, Run run) {
-            //Increment credential usage
-            CredentialUsages.incrementCredentialUsage(c,run);
             // Check if run is from Free Style Build
             if (run instanceof FreeStyleBuild) {
                 FreeStyleBuild freeStyleBuild = (FreeStyleBuild) run;

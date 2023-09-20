@@ -65,7 +65,7 @@ public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> 
         CredentialUsages credentialUsages = loadCredentialUsageReport();
         CredentialUsage credentialUsage = credentialUsages.credentialUsageMap.getOrDefault(credentialId, new CredentialUsage(credentialId));
         if (callerObject instanceof Run) {
-            String itemName = ((Run) callerObject).getParent().getUrl();
+            String itemName = ((Run) callerObject).getParent().getFullName();
             LOGGER.fine(String.format("Incrementing usage count for Credential:%s and item:%s", credentialId,itemName));
             credentialUsage = credentialUsage.incrementItemUsage(itemName);
         } else if (callerObject instanceof Node) {
@@ -73,7 +73,7 @@ public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> 
             LOGGER.fine(String.format("Incrementing usage count for Credential:%s and node:%s", credentialId,nodeName));
             credentialUsage = credentialUsage.incrementNodeUsage(nodeName);
         } else if (callerObject instanceof Item) {
-            String itemName = ((Item) callerObject).getUrl();
+            String itemName = ((Item) callerObject).getFullName();
             LOGGER.fine(String.format("Incrementing usage count for Credential:%s and item:%s", credentialId,itemName));
             credentialUsage = credentialUsage.incrementItemUsage(itemName);
         }

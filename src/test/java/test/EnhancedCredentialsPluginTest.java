@@ -192,8 +192,8 @@ public class EnhancedCredentialsPluginTest extends BaseTest{
         CredentialUsages credentialUsages  = this.getCredentialUsages(this.jenkinsRule);
         CredentialUsage credentialUsage = credentialUsages.getCredentialUsageMap().get(credential1.getId());
         Assert.assertEquals(2, credentialUsage.getTotalUsageCount().intValue());
-        Assert.assertEquals(1, credentialUsage.getItemUsage().get(workflowJob.getUrl()).intValue());
-        Assert.assertEquals(1, credentialUsage.getItemUsage().get(freeStyleProject.getUrl()).intValue());
+        Assert.assertEquals(1, credentialUsage.getItemUsage().get(workflowJob.getFullName()).intValue());
+        Assert.assertEquals(1, credentialUsage.getItemUsage().get(freeStyleProject.getFullName()).intValue());
     }
 
     @Test
@@ -205,8 +205,8 @@ public class EnhancedCredentialsPluginTest extends BaseTest{
         CredentialUsages credentialUsages  = this.getCredentialUsages(this.jenkinsRule);
         CredentialUsage credentialUsage = credentialUsages.getCredentialUsageMap().get(credential1.getId());
         Assert.assertEquals(2, credentialUsage.getTotalUsageCount().intValue());
-        Assert.assertEquals(1, credentialUsage.getItemUsage().get(workflowJob.getUrl()).intValue());
-        Assert.assertEquals(1, credentialUsage.getItemUsage().get(freeStyleProject.getUrl()).intValue());
+        Assert.assertEquals(1, credentialUsage.getItemUsage().get(workflowJob.getFullName()).intValue());
+        Assert.assertEquals(1, credentialUsage.getItemUsage().get(freeStyleProject.getFullName()).intValue());
     }
 
 
