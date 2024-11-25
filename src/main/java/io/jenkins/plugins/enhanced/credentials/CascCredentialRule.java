@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+/**
+ * DTO Class for CASC
+ */
 @Getter
 @Setter
 public class CascCredentialRule {

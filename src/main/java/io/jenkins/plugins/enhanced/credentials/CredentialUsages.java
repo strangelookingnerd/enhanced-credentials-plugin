@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+/**
+ * Class for saving and loading credential usages
+ */
 public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> {
 
     private static final Logger LOGGER = Logger.getLogger(CredentialRuleSupporter.class.getName());
@@ -33,32 +36,41 @@ public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> 
         return credentialUsageMap;
     }
 
+    /**
+     * Returns the descriptor
+     * @return
+     */
     private static CredentialUsages.CredentialUsageDescriptor getCredentialUsageReport() {
         Descriptor descriptor = Jenkins.get().getDescriptorOrDie(CredentialUsages.class);
         return (CredentialUsages.CredentialUsageDescriptor) descriptor;
     }
 
+    /**
+     * Loads credential usages
+     * @return
+     */
     protected static CredentialUsages loadCredentialUsageReport() {
         getCredentialUsageReport().load();
         return getCredentialUsageReport().getCredentialUsageReport();
     }
 
+    /**
+     * Saves the credential usages
+     * @param credentialUsages
+     * @return
+     */
     private static CredentialUsages saveCredentialUsageReport(CredentialUsages credentialUsages) {
         getCredentialUsageReport().credentialUsageMap = credentialUsages.getCredentialUsageMap();
         getCredentialUsageReport().save();
         return getCredentialUsageReport().getCredentialUsageReport();
     }
 
-    private static Optional<String> callGetId(Credentials credentials) {
-        try {
-            Method getIdMethod = credentials.getClass().getMethod("getId");
-            Object getIdResult = getIdMethod.invoke(credentials);
-            return Optional.of(String.valueOf(getIdResult));
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            return Optional.empty();
-        }
-    }
 
+    /**
+     * Increments the credential usage for the given credential
+     * @param credentials Credential
+     * @param callerObject Caller Object Job/FreeStyle
+     */
     public static synchronized void incrementCredentialUsage(Credentials credentials, Object callerObject) {
         String credentialId = CredentialRuleSupporter.callGetId(credentials);
         LOGGER.fine(String.format("Incrementing usage count for Credential:%s", credentialId));
@@ -81,6 +93,9 @@ public class CredentialUsages extends AbstractDescribableImpl<CredentialUsages> 
         saveCredentialUsageReport(credentialUsages);
     }
 
+    /**
+     * Clears the credential usage
+     */
     public static synchronized void clearUsageData(){
         LOGGER.info("Clearing Usage Data");
         CredentialUsages credentialUsages = loadCredentialUsageReport();

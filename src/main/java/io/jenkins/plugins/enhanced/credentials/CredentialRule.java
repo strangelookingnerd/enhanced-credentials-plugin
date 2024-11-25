@@ -14,6 +14,9 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
+/**
+ * Credential Rule class
+ */
 public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
 
     private String name;
@@ -70,6 +73,11 @@ public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
             return "Credential Rule Definition";
         }
 
+        /**
+         * Post Action for checking rule name
+         * @param value Name of the rule
+         * @return FormValidation
+         */
         @RequirePOST
         public FormValidation doCheckName(@QueryParameter String value){
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
@@ -79,6 +87,11 @@ public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
             return FormValidation.ok();
         }
 
+        /**
+         * Post Action for checking credential pattern
+         * @param value Credential Pattern
+         * @return FormValidation
+         */
         @RequirePOST
         public FormValidation doCheckCredentialPattern(@QueryParameter String value){
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
@@ -88,11 +101,16 @@ public class CredentialRule extends AbstractDescribableImpl<CredentialRule> {
             return FormValidation.ok();
         }
 
+        /**
+         * Post Action for checking item pattern
+         * @param value Item Pattern
+         * @return FormValidation
+         */
         @RequirePOST
         public FormValidation doCheckItemPattern(@QueryParameter String value){
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
             if(Util.fixEmptyAndTrim(value) == null){
-                return FormValidation.error("Item Patterncan't be empty.");
+                return FormValidation.error("Item Pattern can't be empty.");
             }
             return FormValidation.ok();
         }

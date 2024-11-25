@@ -21,6 +21,9 @@ import org.kohsuke.stapler.StaplerRequest;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Credential Rules class which saves the rules from configuration page and process CASC changes
+ */
 public class CredentialRules extends AbstractDescribableImpl<CredentialRules> {
 
     private static final Logger LOGGER = Logger.getLogger(CredentialRules.class.getName());
@@ -68,11 +71,18 @@ public class CredentialRules extends AbstractDescribableImpl<CredentialRules> {
             return new CredentialRules(this.credentialRuleList, this.restrictNotMatching);
         }
 
+        /**
+         * Process and parse configuration as code plugin
+         * @param config Incoming config from CASC plugin
+         * @return Processed credential rules
+         * @throws ConfiguratorException
+         */
         private CredentialRules processCasc(CNode config) throws ConfiguratorException {
             LOGGER.fine("Processing Casc");
             Boolean restrictNotMatching = false;
             List<CredentialRule> credentialRuleList = new ArrayList<>();
             Mapping credentialRulesMapping = config.asMapping();
+            // Loop in all the nodes
             for (Map.Entry<String, CNode> entry : credentialRulesMapping.entrySet()) {
                 LOGGER.fine(String.format("Processing Cnode Entry for %s", entry.getKey()));
                 String key = entry.getKey();
@@ -88,6 +98,7 @@ public class CredentialRules extends AbstractDescribableImpl<CredentialRules> {
                     String credentialPattern = credentialRuleMapping.get("credentialPattern").toString();
                     String itemPattern = credentialRuleMapping.get("itemPattern").toString();
                     LOGGER.fine(String.format("Adding Credential Rule with values %s %s %s", key, credentialPattern, itemPattern));
+                    // Add parsed rule to the list
                     credentialRuleList.add(new CredentialRule(key, credentialPattern, itemPattern));
                 }
             }
@@ -141,7 +152,6 @@ public class CredentialRules extends AbstractDescribableImpl<CredentialRules> {
             CredentialRules credentialRules = this.processCasc(config);
             return credentialRules;
         }
-
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject submittedForm) throws FormException {

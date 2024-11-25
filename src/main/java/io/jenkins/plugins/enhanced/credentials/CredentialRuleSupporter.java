@@ -14,22 +14,43 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * Supporter class for credential rules
+ */
 public class CredentialRuleSupporter {
 
     private static final Logger LOGGER = Logger.getLogger(CredentialRuleSupporter.class.getName());
 
+    /**
+     * Checks if the credential has access for the given Free Style Project
+     * @param credentials Credential which will be checked
+     * @param project Free Style Project
+     * @return True/False
+     */
     public Boolean checkProjectHasAccessForCredential(Credentials credentials, FreeStyleProject project) {
         String credentialId = callGetId(credentials);
         String itemName = project.getFullName();
         return checkItemHasAccessForCredential(credentialId, itemName);
     }
 
+    /**
+     * Checks if the credential has access for the given Job
+     * @param credentials Credential which will be checked
+     * @param job Job
+     * @return True/False
+     */
     public Boolean checkJobHasAccessForCredential(Credentials credentials, Job job) {
         String credentialId = callGetId(credentials);
         String itemName = job.getFullName();
         return checkItemHasAccessForCredential(credentialId, itemName);
     }
 
+    /**
+     * Checks the credential rules and returns if the credential has access for the given item (FreeStyle/Job)
+     * @param credentialId ID of the credential
+     * @param itemName Name of the job/freestyle job
+     * @return True/False
+     */
     private Boolean checkItemHasAccessForCredential(String credentialId, String itemName) {
         CredentialRules credentialRules = CredentialRuleConfiguration.loadCredentialRules();
         LOGGER.fine(String.format("Checking Access for Credential:%s and Item:%s", credentialId, itemName));
@@ -110,11 +131,21 @@ public class CredentialRuleSupporter {
         return false;
     }
 
+    /**
+     * This method tries to fail the FreeStyle build
+     * @param freeStyleBuild
+     * @throws AbortException
+     */
     public void tryStoppingFreeStyleBuild(FreeStyleBuild freeStyleBuild) throws AbortException {
         freeStyleBuild.setResult(Result.FAILURE);
         throw new AbortException("Stopping build..");
     }
 
+    /**
+     * This method tries to fail the Run
+     * @param workflowRun
+     * @throws Exception
+     */
     public void tryStoppingWorkflowRun(WorkflowRun workflowRun) {
         LOGGER.fine(String.format("Tyring to stop Workflow Run:%s", workflowRun.getUrl()));
         TaskListener taskListener = GenericRunListener.getTaskListener(workflowRun.getUrl());
@@ -142,6 +173,11 @@ public class CredentialRuleSupporter {
         }
     }
 
+    /**
+     * This method returns the credential id of the given credential
+     * @param credentials Credential Object
+     * @return ID of the credential
+     */
     public static String callGetId(Credentials credentials) {
         try {
             Method getIdMethod = credentials.getClass().getMethod("getId");
@@ -153,6 +189,10 @@ public class CredentialRuleSupporter {
         }
     }
 
+    /**
+     * Checks if the user has Admin permission
+     * @throws Exception
+     */
     public static void checkAdminPermission() throws Exception {
         Jenkins jenkins = Jenkins.getInstanceOrNull();
         if(jenkins == null){
